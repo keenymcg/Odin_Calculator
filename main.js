@@ -35,7 +35,7 @@ clicks on the operator should act as an equal sign at first (for the first two n
 in the first click-event, it'll return a num1 times an empty num2
 - if num1 * num2 != number, don't do anything
 Then num2 is clicked, and still nothing visibly happens except: 
-- checks to see if there's a value in the operator variable, and...
+- IN SEPARATE FUNC? checks to see if there's a value in the operator variable, and...
 - ...if there is, num2 is wiped to empty string
 - then the new number is concatenated to the newly-empty num2 variable (don't forget max of 9 digits/chars)
 then assume the operator is clicked again
@@ -49,12 +49,14 @@ And then that just repeats
 
 
 
-let num1 = 5
-let num2 = 6
+let num1 = "5"
+let num2 = "6"
 let temp = 0
+let currentOperator = "*"
 
 function operatorClick(operator) { //change this to a click-activated function
     let result = 0;
+    currentOperator = operator
 
     if (operator === '+') {
         result = parseFloat(num1) + parseFloat(num2);
@@ -67,12 +69,22 @@ function operatorClick(operator) { //change this to a click-activated function
     };
 
     num1 = result
+    num2 = "" // I think this will 
 
-    console.log(num1)
-
+    return result //eventually, push this result to the display
 };
 
-operatorClick("*");
+function numClick(value) { // might need to store this function inside the num1 and num2 parsefloat parameters
+    if (currentOperator == "") {
+        num1 = num1.concat(value);
+        return num1;
+    } else if (currentOperator != "") {
+        num2 = num2.concat(value);
+        return num2;
+    };
+};
+
+console.log(numClick("2"));
 
 /*  HTML TODO
 
