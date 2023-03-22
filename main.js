@@ -49,26 +49,30 @@ And then that just repeats
 
 
 
-
-
-let result;
-let num1 = 1
-let num2 = 2
+let num1 = 5
+let num2 = 6
 let temp = 0
 
-function testFunc(operator) {
+function operatorClick(operator) { //change this to a click-activated function
+    let result = 0;
+
     if (operator === '+') {
-        result = num1 + num2;
-        num1 = result
+        result = parseFloat(num1) + parseFloat(num2);
     } else if (operator === '-') {
-        result = num1 - num2;
+        result = parseFloat(num1) - parseFloat(num2);
     } else if (operator === '*') {
-        result = num1 * num2;
+        result = parseFloat(num1) * parseFloat(num2);
     } else if (operator === '/') {
-        result = num1 / num2;
-    }
-    console.log(result);
-}
+        result = parseFloat(num1) / parseFloat(num2);
+    };
+
+    num1 = result
+
+    console.log(num1)
+
+};
+
+operatorClick("*");
 
 /*  HTML TODO
 
