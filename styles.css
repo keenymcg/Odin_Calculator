@@ -16,13 +16,17 @@ body {
 
 #display {
     height: 96px;
-    width: 296px;
+    line-height: 130px;
+    width: 298px;
     margin: 2px;
+    padding-right: 10px;
     border: black 1px solid;
+    text-align: right;
 }
 
 .normalBtn {
     height: 72.5px;
+    line-height: 72.5px;
     width: 72.5px;
     border: black 1px solid;
     margin: 2px;
@@ -30,7 +34,9 @@ body {
 
 #zero {
     height: 72.5px;
+    line-height: 72.5px;
     width: 151px;
     margin: 2px;
     border: black 1px solid;
+
 }

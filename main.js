@@ -62,9 +62,3 @@ function numClick(value) { // might need to store this function inside the num1 
 };
 
 console.log(numClick("2"));
-
-/*  HTML TODO
-
-
-
-*/
