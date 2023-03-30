@@ -24,10 +24,60 @@ And then that just repeats
 
 
 
-let num1 = "5"
-let num2 = "6"
+let num1 = ''
+let num2 = ''
 let temp = 0
-let currentOperator = "*"
+let currentOperator = ''
+
+const container = document.querySelector('#calcContainer');
+const divs = container.querySelectorAll('div');
+divs.forEach(div => {
+    div.classList.add('button');
+});
+
+const allButtons = document.querySelectorAll('.button');
+
+allButtons.forEach(div => {
+    div.addEventListener('click', () => {
+        let textContent = div.textContent;
+        if (textContent == ["1"] && num1 === '') {
+            // console.log('The number is between 1-9');
+            num1.concat(number); // TODO: this not console.logging any value. Why?
+            console.log(num1);
+        } else {
+            // console.log('The number is not between 1-9');
+        }
+    });
+});
+
+function numClick(value) { // might need to store this function inside the num1 and num2 parsefloat parameters
+    if (currentOperator == "" && num1.length < 9) {
+        num1 = num1.concat(value);
+        return num1;
+    } else if (currentOperator != "" && num2.length < 9) {
+        num2 = num2.concat(value);
+        return num2;
+    };
+};
+
+/* 
+num1
+for every div in the #calcContainer, add the class "button"
+EVENTLISTENER for any button click
+if the value/text-content of the click isn't 0-9 or "." or "C", and num1 = "", do nothing
+if it's "C", run the reset function
+if num1.length = 9, continue (aka break, do nothing)
+if button is a number 1-9, and num1 = empty string, concat to num1
+if button 
+*/
+
+
+// DISPLAY
+// the display is set to: if num2 = empty string, display = num1
+// BUT if num2 != "", display text-content = num2
+
+
+// JAVASCRIPT
 
 function operatorClick(operator) { //change this to a click-activated function
     let result = 0;
@@ -51,14 +101,12 @@ function operatorClick(operator) { //change this to a click-activated function
     return result //eventually, push this result to the display
 };
 
-function numClick(value) { // might need to store this function inside the num1 and num2 parsefloat parameters
-    if (currentOperator == "" && num1.length < 9) {
-        num1 = num1.concat(value);
-        return num1;
-    } else if (currentOperator != "" && num2.length < 9) {
-        num2 = num2.concat(value);
-        return num2;
-    };
-};
+// need a clearAll() to reset the calculator
+// ideally clicking it once just resets the current variable, and twice resets everything
+// if clearAll() is run when the display has text-content, clear the display? or go back to the prior result (num1)...
+    // ...with a little message that says "previous input..."
+// if num2 is an empty string, then num1 = '', and clear the operator variable? clear num2 var for good measure. 
+
+
 
 console.log(numClick("2"));
