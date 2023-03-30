@@ -1,3 +1,36 @@
 body {
-    
+
+}
+
+#calcContainer {
+    height: 620px;
+    width: 320px;
+    border: black 1px solid;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+#display {
+    height: 96px;
+    width: 296px;
+    margin: 2px;
+    border: black 1px solid;
+}
+
+.normalBtn {
+    height: 72.5px;
+    width: 72.5px;
+    border: black 1px solid;
+    margin: 2px;
+}
+
+#zero {
+    height: 72.5px;
+    width: 151px;
+    margin: 2px;
+    border: black 1px solid;
 }
