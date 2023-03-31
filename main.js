@@ -26,6 +26,7 @@ And then that just repeats
 
 let num1 = ''
 let num2 = ''
+let num3 = 1
 let temp = 0
 let currentOperator = ''
 
@@ -39,17 +40,9 @@ const allButtons = document.querySelectorAll('.button');
 
 allButtons.forEach(div => {
     div.addEventListener('click', () => {
-        let textContent = div.textContent;
-        if (/[0-9]/.test(textContent) && num1.length <= 8) {
-            // console.log('The number is between 1-9');
-            num1 = num1.concat(textContent);
-        } else if (/[.]/.test(textContent) && num1.indexOf('.') == -1) {
-            num1 = num1.concat(textContent);
-        } else if (textContent = "C") {
-            clearAll(); // why is this being run if I click decimal more than once or get past 9 chars?
-        }
-        let display = document.getElementById('display')
-        display.textContent = num1;
+        buttonClick(div);
+        display();
+    
     });
 });
 
@@ -75,9 +68,27 @@ if button
 */
 
 
-// DISPLAY
-// the display is set to: if num2 = empty string, display = num1
-// BUT if num2 != "", display text-content = num2
+function buttonClick(div) {
+    let textContent = div.textContent;
+        if (/[0-9]/.test(textContent) && num1.length <= 8) {
+            // console.log('The number is between 1-9');
+            num1 = num1.concat(textContent);
+        } else if (/[.]/.test(textContent) && num1.indexOf('.') == -1) {
+            num1 = num1.concat(textContent);
+        } else if (textContent === "C") {
+            clearAll(); // why is this being run if I click decimal more than once or get past 9 chars?
+        } 
+}
+
+function display() {
+    let display = document.getElementById('display')
+    display.textContent = num1
+    if (num2 = '') {
+        display.textContent = num1; 
+    } else if (num2 != '') {
+        display.textContent = num2;
+    };
+}
 
 
 // JAVASCRIPT
