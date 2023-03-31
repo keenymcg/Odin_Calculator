@@ -40,18 +40,21 @@ const allButtons = document.querySelectorAll('.button');
 allButtons.forEach(div => {
     div.addEventListener('click', () => {
         let textContent = div.textContent;
-        if (textContent == ["1"] && num1 === '') {
+        if (/[0-9]/.test(textContent) && num1.length <= 8) {
             // console.log('The number is between 1-9');
-            num1.concat(number); // TODO: this not console.logging any value. Why?
-            console.log(num1);
-        } else {
-            // console.log('The number is not between 1-9');
+            num1 = num1.concat(textContent);
+        } else if (/[.]/.test(textContent) && num1.indexOf('.') == -1) {
+            num1 = num1.concat(textContent);
+        } else if (textContent = "C") {
+            clearAll(); // why is this being run if I click decimal more than once or get past 9 chars?
         }
+        let display = document.getElementById('display')
+        display.textContent = num1;
     });
 });
 
 function numClick(value) { // might need to store this function inside the num1 and num2 parsefloat parameters
-    if (currentOperator == "" && num1.length < 9) {
+    if (currentOperator == '' && num1.length < 9) {
         num1 = num1.concat(value);
         return num1;
     } else if (currentOperator != "" && num2.length < 9) {
@@ -107,6 +110,9 @@ function operatorClick(operator) { //change this to a click-activated function
     // ...with a little message that says "previous input..."
 // if num2 is an empty string, then num1 = '', and clear the operator variable? clear num2 var for good measure. 
 
+function clearAll() {
+    num1 = ''
 
+}
 
-console.log(numClick("2"));
+// console.log(numClick("2"));
