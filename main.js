@@ -1,11 +1,6 @@
 /*  JS TODO
 
-~~ number function
-event listener: a click concatenates a num (as a string) to a variable
-- variable can only be 9 digits long
---- therefore it checks for the num1 string-length. If it === 9, don't concatenate
-
-OPERATOR FUNCTION (using * as example) - DONE?
+OPERATOR FUNCTION (using * as example) - DONE? NO
 clicks on the operator should act as an equal sign at first (for the first two numbers), so that num1 is the accumulator
 in the first click-event, it'll return a num1 times an empty num2
 - if num1 * num2 != number, don't do anything
@@ -26,9 +21,7 @@ And then that just repeats
 
 let num1 = ''
 let num2 = ''
-let num3 = 1
 let temp = 0
-let currentOperator = ''
 
 const container = document.querySelector('#calcContainer');
 const divs = container.querySelectorAll('div');
@@ -63,10 +56,10 @@ function buttonClick(div) {
             num1 = num1.concat(textContent);
         } else if (/[.]/.test(textContent) && num1.indexOf('.') == -1) {
             num1 = num1.concat(textContent);
-        } else if (textContent === /[/X-+]/) {
-            operatorClick();
+        } else if (textContent === /[/\+\-X]/) {
+            operatorClick(textContent);
         } else if (textContent === "C") {
-            clearAll(); // why is this being run if I click decimal more than once or get past 9 chars?
+            clearAll();
         } 
 }
 
@@ -80,11 +73,14 @@ function display() {
     };
 }
 
-
-function operatorClick(operator) { //change this to a click-activated function
+// START HERE: Question: How to make number inputs switch to fill num2 after the operator is clicked?
+// 
+function operatorClick(textContent) { 
     let result = 0;
-    currentOperator = operator
-
+    let operator = textContent;
+    // maybe put all of this inside an "if num2 = '' don't do anything, BUT..."
+    // ...if num2 != 0, do something
+    // remember trying to put all this into a template literal, the create function to run equation?
     if (operator === '+') {
         result = parseFloat(num1) + parseFloat(num2);
     } else if (operator === '-') {
@@ -108,7 +104,6 @@ function operatorClick(operator) { //change this to a click-activated function
 // if clearAll() is run when the display has text-content, clear the display? or go back to the prior result (num1)...
     // ...with a little message that says "previous input..."
 // if num2 is an empty string, then num1 = '', and clear the operator variable? clear num2 var for good measure. 
-
 function clearAll() {
     num1 = ''
 
