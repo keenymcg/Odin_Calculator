@@ -42,11 +42,11 @@ allButtons.forEach(div => {
     div.addEventListener('click', () => {
         buttonClick(div);
         display();
-    
+        
     });
 });
 
-function numClick(value) { // might need to store this function inside the num1 and num2 parsefloat parameters
+/* function numClick(value) { // might need to store this function inside the num1 and num2 parsefloat parameters
     if (currentOperator == '' && num1.length < 9) {
         num1 = num1.concat(value);
         return num1;
@@ -54,19 +54,7 @@ function numClick(value) { // might need to store this function inside the num1 
         num2 = num2.concat(value);
         return num2;
     };
-};
-
-/* 
-num1
-for every div in the #calcContainer, add the class "button"
-EVENTLISTENER for any button click
-if the value/text-content of the click isn't 0-9 or "." or "C", and num1 = "", do nothing
-if it's "C", run the reset function
-if num1.length = 9, continue (aka break, do nothing)
-if button is a number 1-9, and num1 = empty string, concat to num1
-if button 
-*/
-
+}; */
 
 function buttonClick(div) {
     let textContent = div.textContent;
@@ -75,6 +63,8 @@ function buttonClick(div) {
             num1 = num1.concat(textContent);
         } else if (/[.]/.test(textContent) && num1.indexOf('.') == -1) {
             num1 = num1.concat(textContent);
+        } else if (textContent === /[/X-+]/) {
+            operatorClick();
         } else if (textContent === "C") {
             clearAll(); // why is this being run if I click decimal more than once or get past 9 chars?
         } 
@@ -90,8 +80,6 @@ function display() {
     };
 }
 
-
-// JAVASCRIPT
 
 function operatorClick(operator) { //change this to a click-activated function
     let result = 0;
