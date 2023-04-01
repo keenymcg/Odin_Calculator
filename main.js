@@ -31,9 +31,9 @@ function buttonClick(div) { //TODO: Why does operator function double-click each
             num1 = num1.concat(textContent);
         } else if (/[/\+\-X]/.test(textContent)) {
             operatorClick(textContent);
-        } else if (textContent === "C") {
+        } else if (textContent === 'C') {
             clearAll();
-        };
+        } // maybe add an '=' event response that makes the display flicker when num2 isn't filled, indicating it needs more info;
     };
     if (currentOperator != '')  {
         if (/[0-9]/.test(textContent) && num2.length <= 8) {
@@ -41,7 +41,7 @@ function buttonClick(div) { //TODO: Why does operator function double-click each
             num2 = num2.concat(textContent);
         } else if (/[.]/.test(textContent) && num2.indexOf('.') == -1) {
             num2 = num2.concat(textContent);
-        } else if (/[/\+\-X]/.test(textContent)) {
+        } else if (/[/\+\-X=]/.test(textContent)) {
             operatorClick(textContent);
         } else if (textContent === "C") {
             clearAll();
@@ -70,7 +70,13 @@ function checkNum1andNum2() {
     };
 };
 
-function operatorClick(operator) { //TODO: Can't figure out why the conditionals are being bypassed. Check your ChatGPT convo
+// FIXING OPERATOR FUNCTION
+// when the operator is clicked, currentOperator = the click
+// if the prevOperator is '' do nothing
+// ... if the preOperator is +-/X, run the equation according to that operator
+// 
+
+function operatorClick(operator) {
     let numsFilled = checkNum1andNum2();
 
     console.log(typeof operator);
@@ -100,10 +106,19 @@ function operatorClick(operator) { //TODO: Can't figure out why the conditionals
 };
 
 function clearAll() {
+    console.log("You've run clearAll()")
     // let display = document.getElementById('display')
     if (num1 != '' && num2 != '') {
         num2 = '';
     } else if (num1 != '' && num2 === '') {
+        num1 = '';
+        num2 = '';
+        currentOperator = '';
+    } else if (num1 === 0 && num2 === '') {
+        num1 = '';
+        num2 = '';
+        currentOperator = '';
+    } else if (num1 === '' && num2 != '') {
         num1 = '';
         num2 = '';
         currentOperator = '';
