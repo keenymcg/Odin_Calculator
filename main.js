@@ -22,6 +22,7 @@ And then that just repeats
 let num1 = ''
 let num2 = ''
 let temp = 0
+let currentOperator = ''
 
 const container = document.querySelector('#calcContainer');
 const divs = container.querySelectorAll('div');
@@ -34,7 +35,8 @@ const allButtons = document.querySelectorAll('.button');
 allButtons.forEach(div => {
     div.addEventListener('click', () => {
         buttonClick(div);
-        display();
+        // console.log(div.textContent);
+        display(num2);
         
     });
 });
@@ -51,19 +53,35 @@ allButtons.forEach(div => {
 
 function buttonClick(div) {
     let textContent = div.textContent;
+    if (currentOperator === '') {
         if (/[0-9]/.test(textContent) && num1.length <= 8) {
             // console.log('The number is between 1-9');
             num1 = num1.concat(textContent);
         } else if (/[.]/.test(textContent) && num1.indexOf('.') == -1) {
             num1 = num1.concat(textContent);
-        } else if (textContent === /[/\+\-X]/) {
+        } else if (/[/\+\-X]/.test(textContent)) {
             operatorClick(textContent);
         } else if (textContent === "C") {
             clearAll();
-        } 
-}
+        };
+    };
+    if (currentOperator != '')  {
+        if (/[0-9]/.test(textContent) && num2.length <= 8) {
+            // console.log('The number is between 1-9');
+            num2 = num2.concat(textContent);
+        } else if (/[.]/.test(textContent) && num2.indexOf('.') == -1) {
+            num2 = num2.concat(textContent);
+        } else if (/[/\+\-X]/.test(textContent)) {
+            operatorClick(textContent);
+        } else if (textContent === "C") {
+            clearAll();
+        };
+    };
+    console.log(`this is num1: ${num1}`)
+    console.log(`this is num2: ${num2}`);
+};
 
-function display() {
+function display(num2) {
     let display = document.getElementById('display')
     display.textContent = num1
     if (num2 = '') {
@@ -73,31 +91,39 @@ function display() {
     };
 }
 
-// START HERE: Question: How to make number inputs switch to fill num2 after the operator is clicked?
-// 
-function operatorClick(textContent) { 
-    let result = 0;
-    let operator = textContent;
-    // maybe put all of this inside an "if num2 = '' don't do anything, BUT..."
-    // ...if num2 != 0, do something
-    // remember trying to put all this into a template literal, the create function to run equation?
-    if (operator === '+') {
+let numsFilled = false
+function checkNum1andNum2() {
+    if (num1 != '' && num2 != '') {
+        numsFilled = true;
+    };
+};
+
+function operatorClick(operator) {
+    checkNum1andNum2();
+    let result = num1;
+    if (numsFilled = false) {
+        result = num1;
+    } else if (numsFilled === true && operator === '+') {
         result = parseFloat(num1) + parseFloat(num2);
-    } else if (operator === '-') {
+    } else if (numsFilled === true && operator === '-') {
         result = parseFloat(num1) - parseFloat(num2);
-    } else if (operator === '*') {
+    } else if (numsFilled === true && operator === '*') {
         result = parseFloat(num1) * parseFloat(num2);
-    } else if (operator === '/') {
+    } else if (numsFilled === true && operator === '/') {
         result = parseFloat(num1) / parseFloat(num2);
-    } else if (operator === '^') {
+    } else if (numsFilled === true && operator === '^') {
         result = parseFloat(num1) ** parseFloat(num2);
     };
 
+    currentOperator = operator;
+    console.log(currentOperator);
     num1 = result
-    num2 = "" // I think this will 
+    num2 = '' 
+}
+    // maybe put all of this inside an "if num2 = '' don't do anything, BUT..."
+    // ...if num2 != 0, do something
+    // remember trying to put all this into a template literal, the create function to run equation?
 
-    return result //eventually, push this result to the display
-};
 
 // need a clearAll() to reset the calculator
 // ideally clicking it once just resets the current variable, and twice resets everything
@@ -105,8 +131,14 @@ function operatorClick(textContent) {
     // ...with a little message that says "previous input..."
 // if num2 is an empty string, then num1 = '', and clear the operator variable? clear num2 var for good measure. 
 function clearAll() {
-    num1 = ''
-
-}
+    let display = document.getElementById('display')
+    if (display.textContent != '') {
+        num1 = ''; // TODO: this needs to become the previous input; like bring it back to the old num1 so they don't lose progress
+    } else if (display.textContent === '') {
+        num1 = '';
+        num2 = '';
+        currentOperator = '';
+    };
+};
 
 // console.log(numClick("2"));
