@@ -64,14 +64,15 @@ function display(num2) {
 let numsFilled = false
 function checkNum1andNum2() {
     if (num1 != '' && num2 != '') {
-        numsFilled = true;
+        return true;
     } else {
-        numsFilled = false;
+        return false;
     };
 };
 
 function operatorClick(operator) { //TODO: Can't figure out why the conditionals are being bypassed. Check your ChatGPT convo
-    checkNum1andNum2;
+    let numsFilled = checkNum1andNum2();
+    console.log(numsFilled);
     let result = num1;
     if (numsFilled = false) {
         result = num1;
@@ -92,20 +93,15 @@ function operatorClick(operator) { //TODO: Can't figure out why the conditionals
     num1 = result
     num2 = '' 
     console.log(`this is the result: ${result}`);
-}
+};
 
-// if clearAll() is run when the display has text-content, clear the display? or go back to the prior result (num1)...
-    // ...with a little message that says "previous input..."
-// if num2 is an empty string, then num1 = '', and clear the operator variable? clear num2 var for good measure. 
 function clearAll() {
-    let display = document.getElementById('display')
-    if (display.textContent != '') {
+    // let display = document.getElementById('display')
+    if (num1 != '' && num2 != '') {
         num2 = '';
-    } else if (display.textContent === '') {
+    } else if (num1 != '' && num2 === '') {
         num1 = '';
         num2 = '';
         currentOperator = '';
     };
 };
-
-// console.log(numClick("2"));
