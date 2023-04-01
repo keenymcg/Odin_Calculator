@@ -21,7 +21,7 @@ allButtons.forEach(div => {
     });
 });
 
-function buttonClick(div) {
+function buttonClick(div) { //TODO: Why does operator function double-click each first time an operator is clicked
     let textContent = div.textContent;
     if (currentOperator === '') {
         if (/[0-9]/.test(textContent) && num1.length <= 8) {
@@ -72,12 +72,15 @@ function checkNum1andNum2() {
 
 function operatorClick(operator) { //TODO: Can't figure out why the conditionals are being bypassed. Check your ChatGPT convo
     let numsFilled = checkNum1andNum2();
+
+    console.log(typeof operator);
     console.log(numsFilled);
+    console.log(parseFloat(num1));
+
     let result = num1;
-    if (numsFilled = false) {
-        result = num1;
-    } else if (numsFilled && operator === '+') {
-        result = parseFloat(num1) + parseFloat(num2);
+    if (numsFilled === true && operator === '+') {
+        result = (parseFloat(num1) + parseFloat(num2));
+        console.log(result);
     } else if (numsFilled === true && operator === '-') {
         result = parseFloat(num1) - parseFloat(num2);
     } else if (numsFilled === true && operator === '*') {
@@ -86,8 +89,9 @@ function operatorClick(operator) { //TODO: Can't figure out why the conditionals
         result = parseFloat(num1) / parseFloat(num2);
     } else if (numsFilled === true && operator === '^') {
         result = parseFloat(num1) ** parseFloat(num2);
+    } else if (numsFilled === false) {
+        result = num1;
     };
-
     currentOperator = operator;
     console.log(currentOperator);
     num1 = result
