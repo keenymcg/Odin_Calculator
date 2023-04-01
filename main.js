@@ -1,6 +1,7 @@
 
 let num1 = ''
 let num2 = ''
+let prevNum1 = ''
 let currentOperator = ''
 
 const container = document.querySelector('#calcContainer');
@@ -46,7 +47,6 @@ function buttonClick(div) {
             clearAll();
         };
     };
-    display();
     console.log(`this is num1: ${num1}`)
     console.log(`this is num2: ${num2}`);
 };
@@ -100,7 +100,7 @@ function operatorClick(operator) { //TODO: Can't figure out why the conditionals
 function clearAll() {
     let display = document.getElementById('display')
     if (display.textContent != '') {
-        num1 = ''; // TODO: this needs to become the previous input; like bring it back to the old num1 so they don't lose progress
+        num2 = '';
     } else if (display.textContent === '') {
         num1 = '';
         num2 = '';
