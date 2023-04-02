@@ -23,7 +23,7 @@ allButtons.forEach(div => {
 
 function buttonClick(div) {
     let textContent = div.textContent;
-//    equals(textContent);
+
     if (prevOperator === '') {
         if (/[0-9]/.test(textContent) && num1.length <= 8) {
             // console.log('The number is between 1-9');
@@ -36,8 +36,9 @@ function buttonClick(div) {
             num1 = num1 * -1;
         } else if (textContent === 'C') {
             clearAll();
-        } // maybe add an '=' event response that makes the display flicker when num2 isn't filled, indicating it needs more info;
+        } // TODO: add an '=' event response that makes the display flicker when num2 isn't filled, indicating it needs more info;
     };
+    
     if (prevOperator != '')  {
         if (/[0-9]/.test(textContent) && num2.length <= 8) {
             // console.log('The number is between 1-9');
@@ -52,8 +53,8 @@ function buttonClick(div) {
             clearAll();
         };
     };
-    console.log(`this is num1: ${num1}`)
-    console.log(`this is num2: ${num2}`);
+    //console.log(`this is num1: ${num1}`)
+    //console.log(`this is num2: ${num2}`);
 };
 
 function posNegNum2(posNeg) {
@@ -108,7 +109,6 @@ function operatorClick(operator) {
     num1 = result;
     formatNumber(num1);
     num2 = '' 
-    console.log(`this is the result: ${result}`);
 };
 
 function formatNumber(numToFormat) {
@@ -125,7 +125,6 @@ function formatNumber(numToFormat) {
             num1 = numToFormat;
         } else if (numAsString.length > 9 && beforeDec < 9) {
             num1 = numToFormat.toFixed(8 - beforeDec);
-            console.log(`This is num1 after format: ${num1}`);
         } else if (beforeDec >= 9) {
             num1 = "too long 🥵"
         };
@@ -133,8 +132,6 @@ function formatNumber(numToFormat) {
 };
 
 function clearAll() {
-    console.log("You've run clearAll()")
-
     if (num1 != '' && num2 != '') {
         num2 = '';
     } else if ((num1 != '' && num2 === '') ||
