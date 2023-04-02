@@ -3,6 +3,7 @@ let num1 = ''
 let num2 = ''
 let prevNum1 = ''
 let currentOperator = ''
+let prevOperator = ''
 
 const container = document.querySelector('#calcContainer');
 const divs = container.querySelectorAll('div');
@@ -23,7 +24,7 @@ allButtons.forEach(div => {
 
 function buttonClick(div) { //TODO: Why does operator function double-click each first time an operator is clicked
     let textContent = div.textContent;
-    if (currentOperator === '') {
+    if (prevOperator === '') {
         if (/[0-9]/.test(textContent) && num1.length <= 8) {
             // console.log('The number is between 1-9');
             num1 = num1.concat(textContent);
@@ -35,7 +36,7 @@ function buttonClick(div) { //TODO: Why does operator function double-click each
             clearAll();
         } // maybe add an '=' event response that makes the display flicker when num2 isn't filled, indicating it needs more info;
     };
-    if (currentOperator != '')  {
+    if (prevOperator != '')  {
         if (/[0-9]/.test(textContent) && num2.length <= 8) {
             // console.log('The number is between 1-9');
             num2 = num2.concat(textContent);
@@ -63,7 +64,7 @@ function display(num2) {
 
 let numsFilled = false
 function checkNum1andNum2() {
-    if (num1 != '' && num2 != '') {
+    if (num1 != '' && num2 != '' || num1 === 0 && num2 != '') {
         return true;
     } else {
         return false;
@@ -79,27 +80,25 @@ function checkNum1andNum2() {
 function operatorClick(operator) {
     let numsFilled = checkNum1andNum2();
 
-    console.log(typeof operator);
+    // console.log(typeof operator);
     console.log(numsFilled);
-    console.log(parseFloat(num1));
+    // console.log(parseFloat(num1));
 
     let result = num1;
-    if (numsFilled === true && operator === '+') {
-        result = (parseFloat(num1) + parseFloat(num2));
-        console.log(result);
-    } else if (numsFilled === true && operator === '-') {
+    if (numsFilled === true && prevOperator === '+') {
+        result = parseFloat(num1) + parseFloat(num2);
+    } else if (numsFilled === true && prevOperator === '-') {
         result = parseFloat(num1) - parseFloat(num2);
-    } else if (numsFilled === true && operator === '*') {
+    } else if (numsFilled === true && prevOperator === '*') {
         result = parseFloat(num1) * parseFloat(num2);
-    } else if (numsFilled === true && operator === '/') {
+    } else if (numsFilled === true && prevOperator === '/') {
         result = parseFloat(num1) / parseFloat(num2);
-    } else if (numsFilled === true && operator === '^') {
+    } else if (numsFilled === true && prevOperator === '^') {
         result = parseFloat(num1) ** parseFloat(num2);
     } else if (numsFilled === false) {
         result = num1;
     };
-    currentOperator = operator;
-    console.log(currentOperator);
+    prevOperator = operator
     num1 = result
     num2 = '' 
     console.log(`this is the result: ${result}`);
@@ -114,13 +113,21 @@ function clearAll() {
         num1 = '';
         num2 = '';
         currentOperator = '';
+        prevOperator = '';
     } else if (num1 === 0 && num2 === '') {
         num1 = '';
         num2 = '';
         currentOperator = '';
+        prevOperator = '';
     } else if (num1 === '' && num2 != '') {
         num1 = '';
         num2 = '';
         currentOperator = '';
-    };
+        prevOperator = '';
+    } else if (num1 === 0 && num2 != '') {
+        num1 = 0;
+        num2 = '';
+        currentOperator = '';
+        prevOperator = '';
+    }
 };
