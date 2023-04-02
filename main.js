@@ -89,7 +89,7 @@ function operatorClick(operator) {
         result = parseFloat(num1) + parseFloat(num2);
     } else if (numsFilled === true && prevOperator === '-') {
         result = parseFloat(num1) - parseFloat(num2);
-    } else if (numsFilled === true && prevOperator === '*') {
+    } else if (numsFilled === true && prevOperator === 'X') {
         result = parseFloat(num1) * parseFloat(num2);
     } else if (numsFilled === true && prevOperator === '/') {
         result = parseFloat(num1) / parseFloat(num2);
