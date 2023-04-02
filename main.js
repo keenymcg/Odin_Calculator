@@ -21,11 +21,6 @@ allButtons.forEach(div => {
     });
 });
 
-// TODO: 
-// floats don't cap at 9 spaces-- spills out of display box
-// make num1 and num2 be rounded to the...
-// well... if I tell it to round the decimal to 8 digits, will it add decimals to integers, making ugly like 81.000000?
-
 function buttonClick(div) {
     let textContent = div.textContent;
 //    equals(textContent);
@@ -60,12 +55,6 @@ function buttonClick(div) {
     console.log(`this is num1: ${num1}`)
     console.log(`this is num2: ${num2}`);
 };
-
-/* function equals(equal) {
-    if (equal === '=' && num2 != '') {
-        num1 = num2;
-    };
-}; */
 
 function posNegNum2(posNeg) {
     if (num2 === '' || num2 === 0) {
@@ -122,17 +111,25 @@ function operatorClick(operator) {
     console.log(`this is the result: ${result}`);
 };
 
-// this isn't working -- other idea of I have is to slice the num1 at the decimal, count the number...
-// ...then use toFixed to determine decimals at that point
-function formatNumber(numToFormat) { // This formatNumber function I stole from ChatGPT...
-    if (Number.isInteger(numToFormat)) {
+function formatNumber(numToFormat) {
+    if (Number.isInteger(numToFormat) && numToFormat.toString().length < 9) {
         return;
+    } else if (Number.isInteger(numToFormat) && numToFormat.toString().length > 9) {
+        num1 = "too long 🥵"
     } else {
-        const maxDigits = 9; // Maximum total number of digits in display
-        const maxDecimals = maxDigits - numToFormat.toFixed(0).toString().length; // Maximum number of decimal places
-        const roundedNum = numToFormat.toFixed(maxDecimals); // Round number to maximum number of decimal places
-        num1 = roundedNum.toString(); // Return formatted number as string
-    }
+        let numAsString = numToFormat.toString()
+        let poopyArray = []
+        poopyArray = numAsString.split('.')
+        let beforeDec = poopyArray[0].length;
+        if (numAsString.length <= 9) {
+            num1 = numToFormat;
+        } else if (numAsString.length > 9 && beforeDec < 9) {
+            num1 = numToFormat.toFixed(8 - beforeDec);
+            console.log(`This is num1 after format: ${num1}`);
+        } else if (beforeDec >= 9) {
+            num1 = "too long 🥵"
+        };
+    };
 };
 
 function clearAll() {
