@@ -32,6 +32,8 @@ function buttonClick(div) { //TODO: Why does operator function double-click each
             num1 = num1.concat(textContent);
         } else if (/[/\+\-X]/.test(textContent)) {
             operatorClick(textContent);
+        } else if (textContent === '~') { 
+            num1 = num1 * -1;
         } else if (textContent === 'C') {
             clearAll();
         } // maybe add an '=' event response that makes the display flicker when num2 isn't filled, indicating it needs more info;
@@ -44,12 +46,22 @@ function buttonClick(div) { //TODO: Why does operator function double-click each
             num2 = num2.concat(textContent);
         } else if (/[/\+\-X=]/.test(textContent)) {
             operatorClick(textContent);
+        } else if (textContent === '~') { 
+            posNegNum2('~');
         } else if (textContent === "C") {
             clearAll();
         };
     };
     console.log(`this is num1: ${num1}`)
     console.log(`this is num2: ${num2}`);
+};
+
+function posNegNum2(posNeg) {
+    if (num2 === '' || num2 === 0) {
+        num2 = '';
+    } else if (num2 != '' || num2 != 0) {
+        num2 = num2 * -1;
+    };
 };
 
 function display(num2) {
