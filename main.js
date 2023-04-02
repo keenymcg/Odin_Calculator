@@ -1,9 +1,13 @@
 
 let num1 = ''
 let num2 = ''
+let postEquals = ''
 let prevNum1 = ''
 let currentOperator = ''
 let prevOperator = ''
+
+// TODO: Hitting equals ("=") needs to retain number displayed on screen, but subsequent 
+// button presses needs to refill num1, meaning num1 must be empty
 
 const container = document.querySelector('#calcContainer');
 const divs = container.querySelectorAll('div');
@@ -23,7 +27,7 @@ allButtons.forEach(div => {
 
 function buttonClick(div) {
     let textContent = div.textContent;
-
+//    equals(textContent);
     if (prevOperator === '') {
         if (/[0-9]/.test(textContent) && num1.length <= 8) {
             // console.log('The number is between 1-9');
@@ -36,9 +40,8 @@ function buttonClick(div) {
             num1 = num1 * -1;
         } else if (textContent === 'C') {
             clearAll();
-        } // TODO: add an '=' event response that makes the display flicker when num2 isn't filled, indicating it needs more info;
+        } // maybe add an '=' event response that makes the display flicker when num2 isn't filled, indicating it needs more info;
     };
-    
     if (prevOperator != '')  {
         if (/[0-9]/.test(textContent) && num2.length <= 8) {
             // console.log('The number is between 1-9');
@@ -53,8 +56,8 @@ function buttonClick(div) {
             clearAll();
         };
     };
-    //console.log(`this is num1: ${num1}`)
-    //console.log(`this is num2: ${num2}`);
+    console.log(`this is num1: ${num1}`)
+    console.log(`this is num2: ${num2}`);
 };
 
 function posNegNum2(posNeg) {
@@ -72,6 +75,8 @@ function display(num2) {
         display.textContent = num1; 
     } else if (num2 != '') {
         display.textContent = num2;
+    } else if (num2 === '' && num1 === '' && postEquals != '') {
+        display.textContent = postEquals;
     };
 };
 
@@ -98,18 +103,39 @@ function operatorClick(operator) {
         result = parseFloat(num1) / parseFloat(num2);
     } else if (numsFilled === true && prevOperator === '^') {
         result = parseFloat(num1) ** parseFloat(num2);
+    } else if (numsFilled === true && operator === '=') {
+        runEquals();
     } else if (numsFilled === false) {
         result = num1;
     };
     
-    if (operator != '=') {
+    if (operator != '=') { // TODO: do I even need this statement?
         prevOperator = operator
     };
 
     num1 = result;
     formatNumber(num1);
     num2 = '' 
+    console.log(`this is the result: ${result}`);
 };
+
+function runEquals() {
+    if (prevOperator === '+') {
+        result = parseFloat(num1) + parseFloat(num2);
+    } else if (prevOperator === '-') {
+        result = parseFloat(num1) - parseFloat(num2);
+    } else if (prevOperator === 'X') {
+        result = parseFloat(num1) * parseFloat(num2);
+    } else if (prevOperator === '/') {
+        result = parseFloat(num1) / parseFloat(num2);
+    } else if (prevOperator === '^') {
+        result = parseFloat(num1) ** parseFloat(num2);
+    }
+    postEquals = result;
+    num1 = '';
+    num2 = '';
+    prevOperator = '';
+}
 
 function formatNumber(numToFormat) {
     if (Number.isInteger(numToFormat) && numToFormat.toString().length < 9) {
@@ -125,6 +151,7 @@ function formatNumber(numToFormat) {
             num1 = numToFormat;
         } else if (numAsString.length > 9 && beforeDec < 9) {
             num1 = numToFormat.toFixed(8 - beforeDec);
+            console.log(`This is num1 after format: ${num1}`);
         } else if (beforeDec >= 9) {
             num1 = "too long 🥵"
         };
@@ -132,6 +159,8 @@ function formatNumber(numToFormat) {
 };
 
 function clearAll() {
+    console.log("You've run clearAll()")
+
     if (num1 != '' && num2 != '') {
         num2 = '';
     } else if ((num1 != '' && num2 === '') ||
