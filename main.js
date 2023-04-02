@@ -21,10 +21,10 @@ allButtons.forEach(div => {
     });
 });
 
-// WHY does the equals sign just work? -- just figured out, it was in the num2 operators reg expression
-// when clicked, it updates num1 and empties num2
-// then you click a new number, it populates num2, and you hit equals
-// it then empties num2 and returns to num1, BUT... I want hitting = in this situation to now change num1 to num2
+// TODO: 
+// floats don't cap at 9 spaces-- spills out of display box
+// make num1 and num2 be rounded to the...
+// well... if I tell it to round the decimal to 8 digits, will it add decimals to integers, making ugly like 81.000000?
 
 function buttonClick(div) {
     let textContent = div.textContent;
@@ -83,7 +83,7 @@ function display(num2) {
     } else if (num2 != '') {
         display.textContent = num2;
     };
-}
+};
 
 let numsFilled = false
 function checkNum1andNum2() {
@@ -116,9 +116,23 @@ function operatorClick(operator) {
         prevOperator = operator
     };
 
-    num1 = result
+    num1 = result;
+    formatNumber(num1);
     num2 = '' 
-    // console.log(`this is the result: ${result}`);
+    console.log(`this is the result: ${result}`);
+};
+
+// this isn't working -- other idea of I have is to slice the num1 at the decimal, count the number...
+// ...then use toFixed to determine decimals at that point
+function formatNumber(numToFormat) { // This formatNumber function I stole from ChatGPT...
+    if (Number.isInteger(numToFormat)) {
+        return;
+    } else {
+        const maxDigits = 9; // Maximum total number of digits in display
+        const maxDecimals = maxDigits - numToFormat.toFixed(0).toString().length; // Maximum number of decimal places
+        const roundedNum = numToFormat.toFixed(maxDecimals); // Round number to maximum number of decimal places
+        num1 = roundedNum.toString(); // Return formatted number as string
+    }
 };
 
 function clearAll() {
