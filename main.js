@@ -31,13 +31,18 @@ function buttonClick(div) {
     if (prevOperator === '') {
         if (/[0-9]/.test(textContent) && num1.length <= 8) {
             // console.log('The number is between 1-9');
+            postEquals = '';
             num1 = num1.concat(textContent);
         } else if (/[.]/.test(textContent) && num1.indexOf('.') == -1) {
             num1 = num1.concat(textContent);
         } else if (/[/\+\-X^]/.test(textContent)) {
             operatorClick(textContent);
         } else if (textContent === '~') { 
-            num1 = num1 * -1;
+            if (postEquals === '') {
+                num1 = num1 * -1;
+            } else if (postEquals != '') {
+                postEquals = postEquals * -1;
+            };
         } else if (textContent === 'C') {
             clearAll();
         } // maybe add an '=' event response that makes the display flicker when num2 isn't filled, indicating it needs more info;
@@ -124,7 +129,7 @@ function runEquals() {
     num1 = '';
     num2 = '';
     prevOperator = '';
-    postEquals = result;
+    postEquals = parseFloat(result);
     formatNumber(postEquals);
 };
 
