@@ -52,7 +52,7 @@ function buttonClick(div) {
         } else if (/[/\+\-X^=]/.test(textContent)) {
             operatorClick(textContent);
         } else if (textContent === '~') { 
-            posNegNum2('~');
+            posNegNum2();
         } else if (textContent === "C") {
             clearAll();
         };
@@ -61,7 +61,7 @@ function buttonClick(div) {
     console.log(`this is num2: ${num2}`);
 };
 
-function posNegNum2(posNeg) {
+function posNegNum2() {
     if (num2 === '' || num2 === 0) {
         num2 = '';
     } else if (num2 != '' || num2 != 0) {
@@ -115,12 +115,11 @@ function runEquals() {
     } else if (prevOperator === '^') {
         result = parseFloat(num1) ** parseFloat(num2);
     }
-    // console.log(`The result of runEquals: ${result}`)
     num1 = '';
     num2 = '';
     prevOperator = '';
     postEquals = result;
-    formatNumber(postEquals); // TODO: this bypasses the display length formatNumber func boundary?
+    formatNumber(postEquals);
 };
 
 function runEquation() {
