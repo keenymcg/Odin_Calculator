@@ -5,6 +5,7 @@ let postEquals = ''
 let prevNum1 = ''
 let currentOperator = ''
 let prevOperator = ''
+let equalsHit = false;
 
 // TODO: Hitting equals ("=") needs to retain number displayed on screen, but subsequent 
 // button presses needs to refill num1, meaning num1 must be empty
@@ -20,7 +21,7 @@ const allButtons = document.querySelectorAll('.button');
 allButtons.forEach(div => {
     div.addEventListener('click', () => {
         buttonClick(div);
-        display(num2);
+        display();
         
     });
 });
@@ -68,10 +69,10 @@ function posNegNum2(posNeg) {
     };
 };
 
-function display(num2) {
+function display() {
     let display = document.getElementById('display')
     display.textContent = num1
-    if (num2 === '') {
+    if (num2 === '' && num1 != '') {
         display.textContent = num1; 
     } else if (num2 != '') {
         display.textContent = num2;
@@ -90,33 +91,16 @@ function checkNum1andNum2() {
 };
 
 function operatorClick(operator) {
-    let numsFilled = checkNum1andNum2();
-
-    let result = num1;
-    if (numsFilled === true && prevOperator === '+') {
-        result = parseFloat(num1) + parseFloat(num2);
-    } else if (numsFilled === true && prevOperator === '-') {
-        result = parseFloat(num1) - parseFloat(num2);
-    } else if (numsFilled === true && prevOperator === 'X') {
-        result = parseFloat(num1) * parseFloat(num2);
-    } else if (numsFilled === true && prevOperator === '/') {
-        result = parseFloat(num1) / parseFloat(num2);
-    } else if (numsFilled === true && prevOperator === '^') {
-        result = parseFloat(num1) ** parseFloat(num2);
-    } else if (numsFilled === true && operator === '=') {
-        runEquals();
-    } else if (numsFilled === false) {
-        result = num1;
-    };
-    
-    if (operator != '=') { // TODO: do I even need this statement?
+    if (operator != '=') {
+        equalsHit === false;
+        runEquation(); 
         prevOperator = operator
     };
 
-    num1 = result;
-    formatNumber(num1);
-    num2 = '' 
-    console.log(`this is the result: ${result}`);
+    if (operator === '=') {
+        equalsHit === true;
+        runEquals();
+    };
 };
 
 function runEquals() {
@@ -131,29 +115,63 @@ function runEquals() {
     } else if (prevOperator === '^') {
         result = parseFloat(num1) ** parseFloat(num2);
     }
-    postEquals = result;
+    // console.log(`The result of runEquals: ${result}`)
     num1 = '';
     num2 = '';
     prevOperator = '';
-}
+    postEquals = result;
+    formatNumber(postEquals); // TODO: this bypasses the display length formatNumber func boundary?
+};
+
+function runEquation() {
+    let numsFilled = checkNum1andNum2();
+
+    if (numsFilled === true && prevOperator === '+') {
+        result = parseFloat(num1) + parseFloat(num2);
+    } else if (numsFilled === true && prevOperator === '-') {
+        result = parseFloat(num1) - parseFloat(num2);
+    } else if (numsFilled === true && prevOperator === 'X') {
+        result = parseFloat(num1) * parseFloat(num2);
+    } else if (numsFilled === true && prevOperator === '/') {
+        result = parseFloat(num1) / parseFloat(num2);
+    } else if (numsFilled === true && prevOperator === '^') {
+        result = parseFloat(num1) ** parseFloat(num2);
+    } else if (numsFilled === false) {
+        result = num1;
+    };
+    num1 = result;
+    formatNumber(num1);
+    num2 = '' 
+};
 
 function formatNumber(numToFormat) {
     if (Number.isInteger(numToFormat) && numToFormat.toString().length < 9) {
         return;
     } else if (Number.isInteger(numToFormat) && numToFormat.toString().length > 9) {
-        num1 = "too long 🥵"
+        clearAll();
+        clearAll();
+        postEquals = "too long 🥵"
     } else {
         let numAsString = numToFormat.toString()
         let poopyArray = []
         poopyArray = numAsString.split('.')
         let beforeDec = poopyArray[0].length;
         if (numAsString.length <= 9) {
-            num1 = numToFormat;
+            if (equalsHit === false) {
+                num1 = numToFormat;
+            } else if (equalsHit === true) {
+                postEquals === numToFormat;
+            }
         } else if (numAsString.length > 9 && beforeDec < 9) {
-            num1 = numToFormat.toFixed(8 - beforeDec);
-            console.log(`This is num1 after format: ${num1}`);
+            if (equalsHit === false) {
+                num1 = numToFormat.toFixed(8 - beforeDec);
+            } else if (equalsHit === true) {
+                postEquals === numToFormat.toFixed(8 - beforeDec);
+            }
         } else if (beforeDec >= 9) {
-            num1 = "too long 🥵"
+            clearAll();
+            clearAll();
+            postEquals = "too long 🥵"
         };
     };
 };
@@ -171,5 +189,7 @@ function clearAll() {
         num2 = '';
         currentOperator = '';
         prevOperator = '';
-    };
+    } else if (num1 === '' && num2 === '') {
+        postEquals = '';
+    }
 };
