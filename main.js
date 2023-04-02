@@ -22,13 +22,12 @@ allButtons.forEach(div => {
     div.addEventListener('click', () => {
         buttonClick(div);
         display();
-        
     });
 });
 
 function buttonClick(div) {
     let textContent = div.textContent;
-//    equals(textContent);
+
     if (prevOperator === '') {
         if (/[0-9]/.test(textContent) && num1.length <= 8) {
             // console.log('The number is between 1-9');
@@ -45,7 +44,6 @@ function buttonClick(div) {
     };
     if (prevOperator != '')  {
         if (/[0-9]/.test(textContent) && num2.length <= 8) {
-            // console.log('The number is between 1-9');
             num2 = num2.concat(textContent);
         } else if (/[.]/.test(textContent) && num2.indexOf('.') == -1) {
             num2 = num2.concat(textContent);
@@ -101,6 +99,14 @@ function operatorClick(operator) {
         equalsHit === true;
         runEquals();
     };
+
+    if (num1 === '' && 
+        num2 === '' && 
+        postEquals != '' &&
+        operator != '=') {
+            num1 = postEquals;
+            prevOperator = operator;
+    }
 };
 
 function runEquals() {
