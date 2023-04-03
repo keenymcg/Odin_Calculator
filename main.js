@@ -7,7 +7,8 @@ let currentOperator = ''
 let prevOperator = ''
 let equalsHit = false;
 
-// TODO: Float won't turn +/-, but after hitting clearAll one time it does
+// TODO: Add keyboard support, for typing in the nums and operators, and return = equals
+
 
 const container = document.querySelector('#calcContainer');
 const divs = container.querySelectorAll('div');
