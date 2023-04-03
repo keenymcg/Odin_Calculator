@@ -7,8 +7,7 @@ let currentOperator = ''
 let prevOperator = ''
 let equalsHit = false;
 
-// TODO: Hitting equals ("=") needs to retain number displayed on screen, but subsequent 
-// button presses needs to refill num1, meaning num1 must be empty
+// TODO: Float won't turn +/-, but after hitting clearAll one time it does
 
 const container = document.querySelector('#calcContainer');
 const divs = container.querySelectorAll('div');
@@ -30,7 +29,6 @@ function buttonClick(div) {
 
     if (prevOperator === '') {
         if (/[0-9]/.test(textContent) && num1.length <= 8) {
-            // console.log('The number is between 1-9');
             postEquals = '';
             num1 = num1.concat(textContent);
         } else if (/[.]/.test(textContent) && num1.indexOf('.') == -1) {
@@ -110,6 +108,7 @@ function operatorClick(operator) {
         postEquals != '' &&
         operator != '=') {
             num1 = postEquals;
+            postEquals = ''
             prevOperator = operator;
     }
 };
@@ -125,7 +124,7 @@ function runEquals() {
         result = parseFloat(num1) / parseFloat(num2);
     } else if (prevOperator === '^') {
         result = parseFloat(num1) ** parseFloat(num2);
-    }
+    };
     num1 = '';
     num2 = '';
     prevOperator = '';
