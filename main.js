@@ -13,7 +13,11 @@ const container = document.querySelector('#calcContainer');
 const divs = container.querySelectorAll('div');
 divs.forEach(div => {
     div.classList.add('button');
+    if (/[1-9]/.test(div.textContent)) {
+        div.classList.add('numButton')
+    }
 });
+
 
 const allButtons = document.querySelectorAll('.button');
 
